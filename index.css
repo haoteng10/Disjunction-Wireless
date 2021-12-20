@@ -1,0 +1,23 @@
+.plans {
+  display: flex;
+}
+
+.card {
+  border: solid 3px #47b0ed;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 0 25px;
+  width: 300px;
+}
+
+/* CSS GRID */
+.customer-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+div.item {
+  grid-column: span 1;
+  grid-row: span 1;
+}
