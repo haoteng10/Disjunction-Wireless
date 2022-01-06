@@ -39,53 +39,42 @@ const calculateAvgOverpayment = (customers) => {
 const displayTableData = (customers) => {
   const customerTable = document.getElementsByClassName("customer-table")[0];
   customers.forEach((customer) => {
-    const phoneNumber = customer.phoneNumber + "";
-    customerTable.innerHTML += `<div class="item">(${phoneNumber.substring(
-      0,
-      3
-    )}) ${phoneNumber.substring(3, 6)}-${phoneNumber.substring(6)}</div>`;
+    let phoneDiv = document.createElement("div");
+    phoneDiv.className = "item";
+    phoneDiv.innerHTML = `(${(customer.phoneNumber + "").substring(0, 3)}) ${(customer.phoneNumber + "").substring(3, 6)}-${(customer.phoneNumber + "").substring(6)}`;
 
-    customerTable.innerHTML += `<div class="item"> ${customer.plan.name} </div>`;
+    let nameDiv = document.createElement("div");
+    nameDiv.className = "item";
+    nameDiv.innerHTML = customer.plan.name;
 
-    customerTable.innerHTML +=
-      '<div class="item">' + customer.dataUsage + " MB</div>";
+    let memoryDiv = document.createElement("div");
+    memoryDiv.className = "item";
+    memoryDiv.innerHTML = `${customer.dataUsage} MB`;
 
-    customerTable.innerHTML +=
-      '<div class="item">$' + customer.plan.calculateCost().toFixed(2) + "</div>";
+    let costDiv = document.createElement("div");
+    costDiv.className = "item";
+    costDiv.innerHTML = customer.plan.calculateCost().toFixed(2);
+
+    customerTable.append(phoneDiv, nameDiv, memoryDiv, costDiv);
   });
 };
 
 const displayPlanStats = (planUsage) => {
-  const basicPlan = document.getElementsByClassName("basic")[0];
-  basicPlan.getElementsByClassName(
-    "no-customer"
-  )[0].innerHTML = `${planUsage.get("Basic").length}`;
-
-  const comprehensivePlan = document.getElementsByClassName("comprehensive")[0];
-  comprehensivePlan.getElementsByClassName(
-    "no-customer"
-  )[0].innerHTML = `${planUsage.get("Comprehensive").length}`;
-
-  const suckerPlan = document.getElementsByClassName("sucker")[0];
-  suckerPlan.getElementsByClassName(
-    "no-customer"
-  )[0].innerHTML = `${planUsage.get("Sucker").length}`;
+  const plans = document.getElementsByClassName("plans")[0];
+  plans.querySelector(".basic .no-customer").innerHTML = `${planUsage.get("Basic").length}`;
+  plans.querySelector(".comprehensive .no-customer").innerHTML = `${planUsage.get("Comprehensive").length}`;
+  plans.querySelector(".sucker .no-customer").innerHTML = `${planUsage.get("Sucker").length}`;
+  //plans.querySelector(".unlimited .no-customer").innerHTML = `${planUsage.get("Unlimited").length}`;
 };
 
 const displayCustomerSelection = (data) => {
   const customerDiv = document.getElementsByClassName("customer")[0];
-
-  customerDiv
-    .getElementsByClassName("best")[0]
-    .getElementsByClassName("plan-percentage")[0].innerHTML = `${(data * 100).toFixed(2)}%`;
-  customerDiv
-    .getElementsByClassName("worst")[0]
-    .getElementsByClassName("plan-percentage")[0].innerHTML = `${
+  customerDiv.querySelector(".best .plan-percentage").innerHTML = `${(data * 100).toFixed(2)}%`;
+  customerDiv.querySelector(".worst .plan-percentage").innerHTML = `${
     ((1 - data) * 100).toFixed(2)
   }%`;
 };
 
 const displayCustomerOverpayment = (customers) => {
-  const overpaymentDiv = document.getElementById("no-overpayment");
-  overpaymentDiv.innerHTML = `$${calculateAvgOverpayment(customers).toFixed(2)}`;
+  document.getElementById("no-overpayment").innerHTML = `$${calculateAvgOverpayment(customers).toFixed(2)}`;
 };

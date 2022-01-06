@@ -98,8 +98,8 @@ class Customer {
 yeet = () => {
   PLAN_NAMES.forEach((name) => leMap.set(name, []));
   const USED_NUMBERS = new Set();
-  // return Array(Math.round(Math.random() * 9000) + 1000)
-  return Array(Math.round(Math.random() * 10) + 1)
+  return Array(Math.round(Math.random() * 9000) + 1000)
+  //return Array(Math.round(Math.random() * 10) + 1)
     .fill(0)
     .map((pineapplesGoOnPizza) => new Customer(USED_NUMBERS));
 };
