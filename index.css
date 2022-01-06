@@ -110,6 +110,14 @@ div.item {
   font-size: 1.2em;
 }
 
+.pieWrapper {
+  padding-left: 0%;
+  height: 40vh;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+}
+
 #pie {
   background: radial-gradient(
     circle closest-side at center,
@@ -120,8 +128,13 @@ div.item {
     green 45deg 110deg, blue 110deg 200deg, purple 200deg
   );
 
-  /*Something with conic gradients*/
-  padding-left: 5%;
-  width: 40%;
-  height: 40vh;
+  width: 70%;
+  height: 100%;
+}
+
+#label
+{
+  border: 2px solid white;
+  width: 30%;
+  height: 100%;
 }
