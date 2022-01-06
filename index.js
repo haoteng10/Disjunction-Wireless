@@ -16,6 +16,7 @@ const initialize = () => {
   displayPlanStats(leMap);
   displayCustomerSelection(customersUsingBestPlan(OUR_LORDS));
   displayCustomerOverpayment(OUR_LORDS);
+  displayBWP(OUR_LORDS);
 };
 
 //Returns decimal number; we will do the rounding in the frontend
@@ -54,7 +55,7 @@ const displayTableData = (customers) => {
 
     let costDiv = document.createElement("div");
     costDiv.className = "item";
-    costDiv.innerHTML = customer.plan.calculateCost().toFixed(2);
+    costDiv.innerHTML = "$" + customer.plan.calculateCost().toFixed(2);
 
     customerTable.append(phoneDiv, nameDiv, memoryDiv, costDiv);
   });
@@ -79,3 +80,10 @@ const displayCustomerSelection = (data) => {
 const displayCustomerOverpayment = (customers) => {
   document.getElementById("no-overpayment").innerHTML = `$${calculateAvgOverpayment(customers).toFixed(2)}`;
 };
+
+//MAKE SURE TO COLLAPSE THE CUSTOMER ARRAY!!!
+const displayBWP = (customers) => {
+  const bwpJSON = aggregateBestWorstPlan(customers);
+  document.querySelector(".best .plan-rating-plan").innerHTML = bwpJSON.best;
+  document.querySelector(".worst .plan-rating-plan").innerHTML = bwpJSON.worst;
+}

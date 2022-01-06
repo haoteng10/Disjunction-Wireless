@@ -1,5 +1,5 @@
 //--------------------PLAN SECTION---------------------------
-class Plan {
+const Plan = class {
   constructor(name, basePrice, freeMb, mbCharge, mbUsed) {
     this.name = name;
     this.basePrice = basePrice;
@@ -105,7 +105,7 @@ yeet = () => {
 };
 
 //Use this instead of yeet for annualized data\
-//But watch out though because it
+//But watch out though because it's multiplying data by 12
 veryYeet = () => {
   let thing = yeet();
   return thing.map((plan) =>
@@ -131,7 +131,7 @@ aggregateBestWorstPlan = (customers) => {
 
   customers.forEach((customer) => {
     aggregate[customer.plans[0].name].best++;
-    aggregate[customer.plans[customer.plans.length - 1]].worst++;
+    aggregate[customer.plans[customer.plans.length - 1].name].worst++;
   });
 
   var best;
@@ -142,9 +142,7 @@ aggregateBestWorstPlan = (customers) => {
     worst ||= key;
 
     if (aggregate[key].best > aggregate[best].best) best = key;
-
     if (aggregate[key].worst > aggregate[worst].worst) worst = key;
-
-    return { best: best, worst: worst };
   });
+  return { best: best, worst: worst };
 };
