@@ -35,15 +35,15 @@ const PLANS = [
   }
 ];
 
-let PLAN_NAMES = PLANS.map((x) => new x(0).name);
+const PLAN_NAMES = PLANS.map((x) => new x(0).name);
 
 //--------------CUSTOMER SECTION---------------------------
 //You have been promoted to customer lmao
 //@see yeet function - the used numbers are generated there
 
 //Tracks plan usage
-var leMap = new Map();
-PLAN_NAMES.forEach((name) => leMap.set(name, []));
+leMap = new Map();
+PLAN_NAMES.forEach((name) => leMap.set(name, [])); //May be redundant, save in case
 
 //Assumes the customer's plan doesn't change once initialized
 //Which tbf doesn't happen in the specs
@@ -87,11 +87,16 @@ class Customer {
   calculateOverpayment() {
     return this.plan.calculateCost() - this.plans[0].calculateCost();
   }
+
+  isUsingBestPlan() {
+    return this.plan.name == this.plans[0].name;
+  }
 }
 
 //---------------------STUFF WE'LL USE SOMEWHERE ELSE LOL---------------------------
 //Non-annualized data
-const yeet = () => {
+yeet = () => {
+  PLAN_NAMES.forEach((name) => leMap.set(name, []));
   const USED_NUMBERS = new Set();
   // return Array(Math.round(Math.random() * 9000) + 1000)
   return Array(Math.round(Math.random() * 10) + 1)
@@ -101,7 +106,7 @@ const yeet = () => {
 
 //Use this instead of yeet for annualized data\
 //But watch out though because it
-const veryYeet = () => {
+veryYeet = () => {
   let thing = yeet();
   return thing.map((plan) =>
     Array(12)
@@ -113,16 +118,12 @@ const veryYeet = () => {
   );
 };
 
-//-------------------Data Initialization--------------
-localStorage.setItem("OUR_LORDS", JSON.stringify(yeet()));
-localStorage.setItem("PLAN_DETAILS", JSON.stringify(Object.fromEntries(leMap)));
-
 //-------------------Data Analysis--------------------
 //These take in an array of all data plans
 //For annualized data, make sure you collapse the array
 
 //@returns JSON for best and worst plan
-const aggregateBestWorstPlan = (customers) => {
+aggregateBestWorstPlan = (customers) => {
   let aggregate = {};
   PLAN_NAMES.forEach((plan) => {
     aggregate[plan] = { best: 0, worst: 0 };
