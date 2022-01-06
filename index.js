@@ -17,6 +17,7 @@ const initialize = () => {
   displayCustomerSelection(customersUsingBestPlan(OUR_LORDS));
   displayCustomerOverpayment(OUR_LORDS);
   displayBWP(OUR_LORDS);
+  displayColorbox(leMap);
 };
 
 //Returns decimal number; we will do the rounding in the frontend
@@ -86,4 +87,26 @@ const displayBWP = (customers) => {
   const bwpJSON = aggregateBestWorstPlan(customers);
   document.querySelector(".best .plan-rating-plan").innerHTML = bwpJSON.best;
   document.querySelector(".worst .plan-rating-plan").innerHTML = bwpJSON.worst;
+}
+
+const displayColorbox = (mappo) => {;
+  const lePie = document.getElementById("pie");
+  const names = Array.from(mappo.keys());
+  const colors = ['#FF652F', '#FFE400', '#14A76C', '#52b4fa']; //4 values lol
+  let background = `radial-gradient(
+    circle closest-side at center,
+    transparent 100%,
+    #272727 0
+  ), conic-gradient(`;
+  
+  var total = names.reduce((cumL, curr) => cumL + +mappo.get(curr).length, 0);
+  let currGradientPercent = 0;
+  names.forEach((plan, idx) => {
+    var percent = +(+mappo.get(plan).length / total * 100).toFixed(2);
+    background += `${colors[idx]} ${currGradientPercent}% ${currGradientPercent + percent}%, `;
+    currGradientPercent += percent;
+  });
+  
+  background = background.replace(/, $/gm, ")");
+  lePie.style.background = background;
 }

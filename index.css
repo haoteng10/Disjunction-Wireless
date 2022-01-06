@@ -110,11 +110,14 @@ div.item {
   font-size: 1.2em;
 }
 
-.pie {
+#pie {
   background: radial-gradient(
     circle closest-side at center,
-    white 100%,
-    transparent 0
+    transparent 100%,
+    #272727 0
+  ), conic-gradient( 
+    red 6deg, orange 6deg 18deg, yellow 18deg 45deg, 
+    green 45deg 110deg, blue 110deg 200deg, purple 200deg
   );
 
   /*Something with conic gradients*/
