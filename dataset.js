@@ -25,7 +25,7 @@ const PLANS = [
   },
   class extends Plan {
     constructor(mbUsed) {
-      super("Basic", 4.99, 0, 0.02, mbUsed);
+      super("Sucker", 4.99, 0, 0.02, mbUsed);
     }
   },
   class extends Plan {
@@ -35,12 +35,21 @@ const PLANS = [
   }
 ];
 
+let PLAN_NAMES = PLANS.map((x) => new x(0).name);
+
 //--------------CUSTOMER SECTION---------------------------
 //You have been promoted to customer lmao
 //@see yeet function - the used numbers are generated there
+
+//Tracks plan usage
+var leMap = new Map();
+PLAN_NAMES.forEach((name) => leMap.set(name, []));
+
+//Assumes the customer's plan doesn't change once initialized
+//Which tbf doesn't happen in the specs
 class Customer {
-  constructor() {
-    this.phoneNumber = ((USED_NUMBERS) => {
+  constructor(USED_NUMBERS) {
+    this.phoneNumber = (() => {
       while (true) {
         var num = Math.round(Math.random() * 9000000000) + 1000000000;
         if (!USED_NUMBERS.has(num)) {
@@ -51,31 +60,90 @@ class Customer {
     })();
 
     this.dataUsage = Math.ceil(Math.random() * 40000);
-    this.plan = new PLANS[Math.floor(Math.random() * PLANS.length)](
-      this.dataUsage
-    );
+    this.plans = Array(PLANS.length)
+      .fill(0)
+      .map((itm, idx) => {
+        return new PLANS[idx](this.dataUsage);
+      })
+      .sort((plan1, plan2) => plan1.calculateCost() - plan2.calculateCost());
+
+    this.plan = this.plans[Math.floor(Math.random() * this.plans.length)];
+
+    //Yeets the plan into leMap
+    leMap.get(this.plan.name).push(this);
   }
 
   //Generates random data usage amount and updates the plan accordingly
   randomMb() {
     this.dataUsage = Math.ceil(Math.random() * 40000);
-    this.plan.mbUsed = this.dataUsage;
+    this.plans.forEach((helloThere) => {
+      helloThere.mbUsed = this.dataUsage;
+    });
+    this.plans.sort(
+      (plan1, plan2) => plan1.calculateCost() - plan2.calculateCost()
+    );
+  }
+
+  calculateOverpayment() {
+    return this.plan.calculateCost() - this.plans[0].calculateCost();
   }
 }
 
 //---------------------STUFF WE'LL USE SOMEWHERE ELSE LOL---------------------------
+//Non-annualized data
 const yeet = () => {
   const USED_NUMBERS = new Set();
-  return Array(Math.round(Math.random() * 9000) + 1000)
+  // return Array(Math.round(Math.random() * 9000) + 1000)
+  return Array(Math.round(Math.random() * 10) + 1)
     .fill(0)
     .map((pineapplesGoOnPizza) => new Customer(USED_NUMBERS));
 };
 
-//Use this instead of yeet for annualized data
+//Use this instead of yeet for annualized data\
+//But watch out though because it
 const veryYeet = () => {
-  //To check: might backfire as all the things point to the same thing
-  Array(12).fill
-  return Array(12)
-    .fill(yeet())
-    .forEach((x) => x.randomMb());
+  let thing = yeet();
+  return thing.map((plan) =>
+    Array(12)
+      .fill({})
+      .forEach((target) => {
+        Object.assign(target, plan);
+        target.randomMb();
+      })
+  );
+};
+
+//-------------------Data Initialization--------------
+localStorage.setItem("OUR_LORDS", JSON.stringify(yeet()));
+localStorage.setItem("PLAN_DETAILS", JSON.stringify(Object.fromEntries(leMap)));
+
+//-------------------Data Analysis--------------------
+//These take in an array of all data plans
+//For annualized data, make sure you collapse the array
+
+//@returns JSON for best and worst plan
+const aggregateBestWorstPlan = (customers) => {
+  let aggregate = {};
+  PLAN_NAMES.forEach((plan) => {
+    aggregate[plan] = { best: 0, worst: 0 };
+  });
+
+  customers.forEach((customer) => {
+    aggregate[customer.plans[0].name].best++;
+    aggregate[customer.plans[customer.plans.length - 1]].worst++;
+  });
+
+  var best;
+  var worst;
+
+  Object.keys(aggregate).forEach((key) => {
+    best ||= key;
+    worst ||= key;
+
+    if (aggregate[key].best > aggregate[best].best) best = key;
+
+    if (aggregate[key].worst > aggregate[worst].worst) worst = key;
+
+    return { best: best, worst: worst };
+  });
 };
