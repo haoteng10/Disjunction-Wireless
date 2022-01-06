@@ -1,5 +1,6 @@
 window.onload = () => {
   initialize();
+  document.getElementById("shuffle").onclick = initialize;
 };
 
 // Initialize
