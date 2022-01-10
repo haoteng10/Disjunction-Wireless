@@ -12,6 +12,9 @@ const initialize = () => {
   }px`;
 
   const OUR_LORDS = yeet();
+
+  console.log(OUR_LORDS);
+
   displayTableData(OUR_LORDS);
   displayPlanStats(leMap);
   displayCustomerSelection(customersUsingBestPlan(OUR_LORDS));
@@ -37,6 +40,16 @@ const calculateAvgOverpayment = (customers) => {
   return (overpay / customers.length);
 };
 
+const getPlanCostByPlanName = (customer, planName) => {
+  let cost = 0;
+  customer.plans.forEach((plan) => {
+    if (plan.name === planName) {
+      cost = plan.calculateCost().toFixed(2);
+    }
+  });
+  return cost;
+}
+
 //=============FRONTEND========================
 
 const displayTableData = (customers) => {
@@ -56,7 +69,12 @@ const displayTableData = (customers) => {
 
     let costDiv = document.createElement("div");
     costDiv.className = "item";
-    costDiv.innerHTML = "$" + customer.plan.calculateCost().toFixed(2);
+    const unlimitedBill = getPlanCostByPlanName(customer, "Unlimited");
+    const suckerBill = getPlanCostByPlanName(customer, "Sucker");
+    const basicBill = getPlanCostByPlanName(customer, "Basic");
+    const comprehensiveBill = getPlanCostByPlanName(customer, "Comprehensive");
+    // console.log(unlimitedBill);
+    costDiv.innerHTML = `$${customer.plan.calculateCost().toFixed(2)}` + `<span>(U-$${unlimitedBill}, S-$${suckerBill}, B-$${basicBill}, C-$${comprehensiveBill})</span>`;
 
     customerTable.append(phoneDiv, nameDiv, memoryDiv, costDiv);
   });
@@ -67,7 +85,7 @@ const displayPlanStats = (planUsage) => {
   plans.querySelector(".basic .no-customer").innerHTML = `${planUsage.get("Basic").length}`;
   plans.querySelector(".comprehensive .no-customer").innerHTML = `${planUsage.get("Comprehensive").length}`;
   plans.querySelector(".sucker .no-customer").innerHTML = `${planUsage.get("Sucker").length}`;
-  //plans.querySelector(".unlimited .no-customer").innerHTML = `${planUsage.get("Unlimited").length}`;
+  plans.querySelector(".unlimited .no-customer").innerHTML = `${planUsage.get("Unlimited").length}`;
 };
 
 const displayCustomerSelection = (data) => {
