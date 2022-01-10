@@ -6,6 +6,7 @@ body {
   font-family: "Roboto", sans-serif;
   margin: 0 5px;
   color: white;
+  text-align: center;
 }
 
 .header {
@@ -103,6 +104,11 @@ div.item {
   grid-column: span 1;
   grid-row: span 1;
   text-align: center;
+  font-size: 1.3em;
+}
+
+div.item span {
+  font-size: 0.6em;
 }
 
 .thead {
