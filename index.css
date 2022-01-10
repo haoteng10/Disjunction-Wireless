@@ -124,23 +124,42 @@ div.item span {
   flex-direction: row;
 }
 
-#pie {
-  background: radial-gradient(
-    circle closest-side at center,
-    transparent 100%,
-    #272727 0
-  ), conic-gradient( 
-    red 6deg, orange 6deg 18deg, yellow 18deg 45deg, 
-    green 45deg 110deg, blue 110deg 200deg, purple 200deg
-  );
-
+#pie, #pie2 {
   width: 70%;
   height: 100%;
 }
 
-#label
+#label, #label2
 {
-  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 30%;
   height: 100%;
+  list-style: none;
+  margin-block: 0;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.listo
+{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.5%;
+}
+
+.listoColor
+{
+  /*height: 8vh*/
+  width: 30%;
+  min-width: 40px;
+  height: auto;
+}
+
+.listoItems
+{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
