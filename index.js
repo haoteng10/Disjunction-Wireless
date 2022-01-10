@@ -108,7 +108,7 @@ const displayBWP = (customers) => {
 }
 
 const displayColorbox = (mappo) => {;
-  const lePie = document.getElementById("pie");
+  const lePie = document.getElementsByClassName("pie")[0];
   const names = Array.from(mappo.keys());
   const colors = ['#FF652F', '#FFE400', '#14A76C', '#52b4fa']; //4 values lol
   let background = `radial-gradient(

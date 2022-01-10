@@ -124,7 +124,7 @@ div.item span {
   flex-direction: row;
 }
 
-#pie {
+.pie {
   background: radial-gradient(
     circle closest-side at center,
     transparent 100%,
@@ -138,7 +138,7 @@ div.item span {
   height: 100%;
 }
 
-#label
+.label
 {
   border: 2px solid white;
   width: 30%;
