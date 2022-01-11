@@ -17,7 +17,7 @@ const initialize = () => {
 
   displayTableData(OUR_LORDS);
   //displayPlanStats(leMap);
-  displayCustomerSelection(customersUsingBestPlan(OUR_LORDS));
+  // displayCustomerSelection(customersUsingBestPlan(OUR_LORDS));
   dpa(customersUsingBestPlan(OUR_LORDS));
   displayCustomerOverpayment(OUR_LORDS);
   displayBWP(OUR_LORDS);
@@ -148,6 +148,7 @@ const displayColorbox = (mappo) => {;
     listoContent.className = "listoItems";
 
     let listoName = document.createElement("div");
+    listoName.classList.add("label-highlight");
     listoName.innerHTML = plan;
 
     let listoPrice = document.createElement("div");
@@ -202,6 +203,7 @@ const dpa = data => {
 
     let listoName = document.createElement("div");
     listoName.innerHTML = item;
+    listoName.classList.add("label-highlight");
 
     let listoPercent = document.createElement("div");
     listoPercent.innerHTML = `${percents[idx]}% of Users`;
