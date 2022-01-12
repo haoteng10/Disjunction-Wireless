@@ -4,7 +4,7 @@
 body {
   background-color: #272727;
   font-family: "Roboto", sans-serif;
-  margin: 0 10px;
+  margin: 0;
   color: white;
   text-align: center;
 }
@@ -21,11 +21,29 @@ body {
   align-items: center;
 }
 
+.footer {
+  width: 100%;
+  height: auto;
+  background-color: #4a269e;
+  margin-top: 3vh;
+  text-align: left;
+}
+
 h1 {
   font: 48pt "Orbitron";
   margin: 1% 1.5%;
 }
 
+.footer h1 {
+  margin: 0;
+  margin-left: 1%;
+  margin-top: 1.5%;
+}
+
+.footer div {
+  font: 24pt "Orbitron";
+  margin-left: 1%;
+}
 #shuffle {
   margin-right: 3%;
   min-width: 85px;
@@ -113,6 +131,8 @@ div.item span {
 .thead {
   font-weight: 800;
   font-size: 1.2em;
+  text-decoration: white solid underline;
+  padding-bottom: 10px;
 }
 
 .pieWrapper {

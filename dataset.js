@@ -98,7 +98,7 @@ class Customer {
 yeet = () => {
   PLAN_NAMES.forEach((name) => leMap.set(name, []));
   const USED_NUMBERS = new Set();
-  return Array(Math.round(Math.random() * 9000) + 1000)
+  return new Array(Math.round(Math.random() * 9000) + 1000)
   //return Array(Math.round(Math.random() * 10) + 1)
     .fill(0)
     .map((pineapplesGoOnPizza) => new Customer(USED_NUMBERS));
@@ -108,13 +108,17 @@ yeet = () => {
 //But watch out though because it's multiplying data by 12
 veryYeet = () => {
   let thing = yeet();
-  return thing.map((plan) =>
-    Array(12)
-      .fill({})
-      .forEach((target) => {
+  thing.slice(0, Math.min(thing.length, 1000));
+    return thing.map((plan) => {
+      let temp = new Array(12).fill(0).map(reeeeeeeeeeeeeeeeeeeeeeee => ({}));
+      temp.forEach((target) => {
         Object.assign(target, plan);
+        target.__proto__ = plan.__proto__;
         target.randomMb();
-      })
+      });
+
+      return temp;
+    }
   );
 };
 

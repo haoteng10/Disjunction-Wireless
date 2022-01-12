@@ -5,15 +5,19 @@ window.onload = () => {
 
 // Initialize
 const initialize = () => {
+  //Resets
+  document.getElementById("label").innerHTML = "";
+  document.getElementById("label2").innerHTML = "";
+
   //Pad
   const header = document.getElementById("header").getBoundingClientRect();
   document.getElementById("pad").style.marginTop = `${
     header.bottom - header.top + 20
   }px`;
 
+  //Toggle for annualized or monthly - warning: annualized data WILL lag
   const OUR_LORDS = yeet();
-
-  console.log(OUR_LORDS);
+  //const OUR_LORDS = veryYeet().flat();
 
   displayTableData(OUR_LORDS);
   //displayPlanStats(leMap);
@@ -75,7 +79,7 @@ const displayTableData = (customers) => {
     const basicBill = getPlanCostByPlanName(customer, "Basic");
     const comprehensiveBill = getPlanCostByPlanName(customer, "Comprehensive");
     // console.log(unlimitedBill);
-    costDiv.innerHTML = `$${customer.plan.calculateCost().toFixed(2)}` + `<span>(U-$${unlimitedBill}, S-$${suckerBill}, B-$${basicBill}, C-$${comprehensiveBill})</span>`;
+    costDiv.innerHTML = `$${customer.plan.calculateCost().toFixed(2)}` + `<span style="padding-left: 3%;">(U-$${unlimitedBill}, S-$${suckerBill}, B-$${basicBill}, C-$${comprehensiveBill})</span>`;
 
     customerTable.append(phoneDiv, nameDiv, memoryDiv, costDiv);
   });
